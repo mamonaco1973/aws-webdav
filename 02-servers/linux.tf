@@ -96,8 +96,11 @@ resource "aws_instance" "efs_client_instance" {
   #   - Mounts the EFS file system.
   #   - Joins the AD domain.
   #   - Applies group ownership and permissions.
+  # User data runs only at first boot, so a change must replace the instance.
+  user_data_replace_on_change = true
+
   user_data = templatefile("./scripts/userdata.sh", {
-    admin_secret   = "admin_ad_credentials_efs"
+    admin_secret   = "admin_ad_credentials_webdav"
     domain_fqdn    = var.dns_zone
     efs_mnt_server = aws_efs_mount_target.efs_mnt_1.dns_name
     netbios        = var.netbios
@@ -109,7 +112,7 @@ resource "aws_instance" "efs_client_instance" {
   # Tags
   # ------------------------------------------------------------------------------
   tags = {
-    Name = "efs-client-gateway"
+    Name = "webdav-gateway"
   }
 
   # ------------------------------------------------------------------------------

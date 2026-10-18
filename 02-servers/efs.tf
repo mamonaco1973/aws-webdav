@@ -27,7 +27,7 @@
 #   - Restrict to trusted CIDRs or security groups in production.
 # ================================================================================
 resource "aws_security_group" "efs_sg" {
-  name        = "efs-sg"
+  name        = "webdav-efs-sg"
   description = "Security group allowing NFS traffic to EFS"
   vpc_id      = data.aws_vpc.ad_vpc.id
 
@@ -54,7 +54,7 @@ resource "aws_security_group" "efs_sg" {
   }
 
   tags = {
-    Name = "efs-sg"
+    Name = "webdav-efs-sg"
   }
 }
 
@@ -69,11 +69,11 @@ resource "aws_security_group" "efs_sg" {
 #   - Encryption at rest is enabled by default.
 # ================================================================================
 resource "aws_efs_file_system" "efs" {
-  creation_token = "mcloud-efs"
+  creation_token = "mcloud-webdav-efs"
   encrypted      = true
 
   tags = {
-    Name = "mcloud-efs"
+    Name = "mcloud-webdav-efs"
   }
 }
 

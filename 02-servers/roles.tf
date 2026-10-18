@@ -4,6 +4,8 @@
 # Purpose:
 #   - Creates an EC2 role that can:
 #       - Read the AD admin secret from AWS Secrets Manager.
+#       - Read jsmith's secret, used by validate.sh and benchmark.sh to
+#         test both protocols as a real domain user.
 #       - Register as an SSM managed instance.
 #   - Creates an instance profile to attach the role to EC2 instances.
 #
@@ -55,7 +57,7 @@ resource "aws_iam_role" "ec2_secrets_role" {
 # ================================================================================
 resource "aws_iam_policy" "secrets_policy" {
   name        = "secrets-read-${local.iam_id}"
-  description = "Allow EC2 to read required Secrets Manager secret"
+  description = "Allow EC2 to read required Secrets Manager secrets"
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -66,7 +68,8 @@ resource "aws_iam_policy" "secrets_policy" {
         "secretsmanager:DescribeSecret"
       ]
       Resource = [
-        data.aws_secretsmanager_secret.admin_secret.arn
+        data.aws_secretsmanager_secret.admin_secret.arn,
+        data.aws_secretsmanager_secret.jsmith_secret.arn
       ]
     }]
   })

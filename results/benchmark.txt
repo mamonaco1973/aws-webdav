@@ -1,0 +1,17 @@
+# benchmark.sh, 2026-10-18 (UTC), fresh destroy + apply, t3.medium client and gateway, EFS bursting
+NOTE: Benchmark running on i-066dff965909bf8ae (SSM command 12b7ab7a-005e-435c-95c3-a54448bd9e9b)...
+Run 1 of 3
+Run 2 of 3
+Run 3 of 3
+
+Median of 3 runs, \\ip-10-0-0-77.ec2.internal
+Operation            SMB                 WebDAV              rclone              WebDAV/SMB  rclone/SMB 
+---------            ---                 ------              ------              ----------  ---------- 
+1 GB write           12.41 s (82 MB/s)   24.27 s (42 MB/s)   25.48 s (40 MB/s)   2.0x        2.1x       
+1 GB read            2.24 s (457 MB/s)   37.85 s (27 MB/s)   13.97 s (73 MB/s)   16.9x       6.2x       
+1000 x 4 KB write    48.18 s             245.44 s            115.05 s            5.1x        2.4x       
+List 1000 files      2.60 s              0.35 s              9.27 s              0.1x        3.6x       
+1000 x 4 KB read     4.99 s              61.68 s             107.45 s            12.3x       21.5x      
+Rename folder        0.05 s              0.59 s              3.61 s              12.8x       77.9x      
+Delete 1000 files    27.28 s             51.60 s             93.36 s             1.9x        3.4x       
+	

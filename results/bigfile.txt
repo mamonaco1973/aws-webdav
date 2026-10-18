@@ -1,0 +1,13 @@
+# bigfile.sh, 2026-10-18 (UTC), same build as benchmark.txt
+NOTE: Writing a large file through Z:, W: and R: on i-066dff965909bf8ae...
+NOTE: Checking the copies on the gateway...
+
+source sha256: 7101c86f0788ab4ca512394c677cac39d3d2dc9f84025eb340e68eeb919de054
+write smb ok 53.4
+write webdav failed 97.6 The parameter is incorrect.
+write rclone ok 136.1
+read10mb rclone ok 0.59
+read10mb webdav failed 0.06 The file size exceeds the limit allowed and cannot be saved.
+server smb.bin: 5368709120 bytes, SHA-256 matches the source
+server dav.bin: 1073741824 bytes, SHA-256 c9f9caa62dfd760c91dfe2a2adeec2538393777cdfee7fc30f7946391344ced3 DOES NOT match (partial or corrupt)
+server rcl.bin: 5368709120 bytes, SHA-256 matches the source

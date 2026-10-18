@@ -31,7 +31,17 @@ provider "aws" {
 #   - Locates the secret storing AD admin credentials for authentication.
 # ================================================================================
 data "aws_secretsmanager_secret" "admin_secret" {
-  name = "admin_ad_credentials_efs"
+  name = "admin_ad_credentials_webdav"
+}
+
+# ================================================================================
+# DATA: Secrets Manager - jsmith Credentials
+# ================================================================================
+# Purpose:
+#   - The test user validate.sh and benchmark.sh sign in as on the servers.
+# ================================================================================
+data "aws_secretsmanager_secret" "jsmith_secret" {
+  name = "jsmith_ad_credentials_webdav"
 }
 
 # ================================================================================

@@ -35,6 +35,13 @@ resource "aws_instance" "windows_ad_instance" {
   # Sized for interactive administration sessions and common AD tooling.
   instance_type = "t3.medium"
 
+  # Room for the client-side caches the comparison exercises: the WebDAV
+  # redirector's TfsStore and rclone's VFS cache both live on C:.
+  root_block_device {
+    volume_size = 100
+    volume_type = "gp3"
+  }
+
   # ------------------------------------------------------------------------------
   # Networking
   # ------------------------------------------------------------------------------
@@ -60,8 +67,11 @@ resource "aws_instance" "windows_ad_instance" {
   # ------------------------------------------------------------------------------
   # Configures the instance to authenticate against the AD domain and
   # connects to supporting infrastructure for management workflows.
+  # User data runs only at first boot, so a change must replace the instance.
+  user_data_replace_on_change = true
+
   user_data = templatefile("./scripts/userdata.ps1", {
-    admin_secret = "admin_ad_credentials_efs"
+    admin_secret = "admin_ad_credentials_webdav"
     domain_fqdn  = var.dns_zone
     samba_server = aws_instance.efs_client_instance.private_dns
   })
